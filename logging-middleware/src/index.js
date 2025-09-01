@@ -1,8 +1,4 @@
-// Reusable logging package that pushes logs to external evaluation service
-// Public API: Log(stack, level, pkg, message, meta?) and express middleware factory
-// The token must be supplied via environment variable EVAL_BEARER_TOKEN (only access_token string) or passed into createLogger
 
-// Use global fetch in browsers; in Node fallback to dynamic import of node-fetch
 let fetchFn = (typeof fetch !== 'undefined') ? fetch : null;
 async function ensureFetch() {
   if (!fetchFn) {
@@ -15,11 +11,11 @@ async function ensureFetch() {
 const VALID_STACK = new Set(['backend', 'frontend']);
 const VALID_LEVEL = new Set(['debug', 'info', 'warn', 'error', 'fatal']);
 const VALID_PACKAGE = new Set([
-  // frontend-only
+
   'component','hook','page','state','style',
-  // shared
+
   'auth','config','middleware','utils',
-  // backend-only
+
   'cache','controller','cron_job','db','domain','handler','repository','route','service'
 ]);
 
@@ -61,7 +57,7 @@ export function createRemoteLogger(options = {}) {
       }
       return res.json().catch(()=>({}));
     } catch (err) {
-      // Last resort local stderr (allowed inside library)
+
       process.stderr.write('[remote-logger] ' + err.message + '\n');
       return null;
     }
@@ -81,11 +77,11 @@ export function createRemoteLogger(options = {}) {
       if (typeof message !== 'string' || !message) throw new Error('message required');
       const payload = { stack, level, package: pkg, message };
       if (allowMeta && meta) {
-        // Attach serialized meta ONLY if explicitly enabled to avoid server rejection
+
         payload.meta = JSON.stringify(meta).slice(0, 2000);
       }
       if (fireAndForget) {
-        send(payload); // no await
+        send(payload);
         return;
       } else {
         return send(payload);
@@ -95,7 +91,7 @@ export function createRemoteLogger(options = {}) {
     }
   }
 
-  // Convenience level helpers
+
   let decoded = null;
   if (debugToken) {
     try {
@@ -128,7 +124,7 @@ export function createRemoteLogger(options = {}) {
   return api;
 }
 
-// Default singleton using env token if present
+
 let defaultLoggerInstance = null;
 export function getLogger() {
   if (!defaultLoggerInstance) {
