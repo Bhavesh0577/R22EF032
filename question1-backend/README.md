@@ -28,8 +28,3 @@ Response 201:
 ```
 { "shortLink": "http://localhost:3000/AbC123x", "expiry": "2025-01-01T00:30:00.000Z" }
 ```
-
-## Notes
-- Replace in-memory store with persistent DB for production.
-- geoip-lite provides coarse country code. IP extraction simplified.
-- Logging middleware writes JSON lines to logs/app.log.
