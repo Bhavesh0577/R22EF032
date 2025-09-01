@@ -1,5 +1,5 @@
-// Simple in-memory store. For production replace with persistent DB.
-export const urls = new Map(); // shortcode -> { originalUrl, createdAt, expiry, clicks: [] }
+
+export const urls = new Map();
 
 export function createRecord(shortcode, originalUrl, validityMinutes) {
   const now = new Date();
@@ -9,7 +9,7 @@ export function createRecord(shortcode, originalUrl, validityMinutes) {
     originalUrl,
     createdAt: now,
     expiry,
-    clicks: [] // { ts, referer, ip, geo }
+    clicks: [] 
   };
   urls.set(shortcode, record);
   return record;

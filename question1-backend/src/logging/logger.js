@@ -1,5 +1,3 @@
-// Custom logging module (no console.log in business logic)
-// Provides structured JSON logs and middleware for request lifecycle
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
@@ -12,7 +10,7 @@ function writeLog(entry) {
   const line = JSON.stringify({ timestamp: new Date().toISOString(), ...entry }) + '\n';
   fs.appendFile(LOG_FILE, line, err => {
     if (err) {
-      // last resort
+
       process.stderr.write('Failed to write log: ' + err.message + '\n');
     }
   });

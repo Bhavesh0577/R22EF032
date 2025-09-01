@@ -1,6 +1,5 @@
 import 'dotenv/config';
 import express from 'express';
-import crypto from 'crypto';
 import { nanoid } from 'nanoid';
 import geoip from 'geoip-lite';
 import { loggingMiddleware, logError, logger } from './logging/logger.js';
@@ -30,7 +29,7 @@ function isExpired(rec) {
   return rec.expiry.getTime() < Date.now();
 }
 
-// POST /shorturls
+
 app.post('/shorturls', (req, res) => {
   try {
     const parsed = createShortUrlSchema.safeParse(req.body);
@@ -61,7 +60,7 @@ app.post('/shorturls', (req, res) => {
   }
 });
 
-// GET /shorturls/:code -> stats
+
 app.get('/shorturls/:code', (req, res) => {
   try {
     const code = req.params.code;
@@ -84,7 +83,7 @@ app.get('/shorturls/:code', (req, res) => {
   }
 });
 
-// Redirect endpoint must be last specific route
+
 app.get('/:code', (req, res) => {
   try {
     const code = req.params.code;
@@ -92,7 +91,7 @@ app.get('/:code', (req, res) => {
   if (!rec) return res.status(404).json({ error: 'NOT_FOUND' });
   if (isExpired(rec)) return res.status(410).json({ error: 'EXPIRED' });
 
-    // record click
+
     const referer = req.get('referer') || null;
     const ip = req.ip || req.connection?.remoteAddress;
     let geo = null;
@@ -106,11 +105,11 @@ app.get('/:code', (req, res) => {
   }
 });
 
-// 404 for others
+
 app.use((req, res) => res.status(404).json({ error: 'ROUTE_NOT_FOUND' }));
 
-// Error handler
-app.use((err, req, res, next) => { // eslint-disable-line
+
+app.use((err, req, res, next) => { 
   logError(err, req);
   res.status(500).json({ error: 'INTERNAL_ERROR' });
 });
