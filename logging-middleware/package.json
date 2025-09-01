@@ -1,0 +1,16 @@
+{
+  "name": "logging-middleware",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "build": "echo 'No build step for JS'",
+    "test": "node test/demo.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}
