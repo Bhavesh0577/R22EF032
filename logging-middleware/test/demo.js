@@ -1,4 +1,3 @@
-// Demo usage (EVAL_BEARER_TOKEN must be set in your environment)
 import { createRemoteLogger } from '../src/index.js';
 
 const token = process.env.EVAL_BEARER_TOKEN;
